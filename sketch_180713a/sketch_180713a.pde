@@ -3,7 +3,7 @@ PVector spd;
 boolean can_click = true;
 PVector box;
 PVector posbox;
-float dif;
+float dif = 70;
 Brick r;
 
 void setup(){
@@ -13,7 +13,6 @@ void setup(){
   spd = new PVector(0,0);
   pos = new PVector(900,900);
   box = new PVector(100,6);
-  dif = 100;
   r   = new Brick();
 }
 
@@ -28,7 +27,9 @@ void draw(){
     
     //Bricks
     r.draw();
-    
+    if(r.collide(pos, 5)) {
+      spd.y *= -1;
+    }
     
     
     // paddle cant leave screen
