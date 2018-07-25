@@ -9,11 +9,11 @@ int score = 0;
 Brick [] br;
 
 void setup() {
-  size(1000, 700);
+  size(1080, 700);
   posbox = new PVector(height/2, 650);
   spd = new PVector(0, 0);
   posball = new PVector(height/2, 645);
-  box = new PVector(300, 60);
+  box = new PVector(200, 25);
   br = new Brick [brick_number];
   for (int i=0; i<brick_number; i++) {
     br[i]= new Brick();
@@ -24,11 +24,11 @@ void draw() {
   if (r_key) {
     setup();
   }
-  background(255, 255, 255);
+  background(0, 0, 0);
   stroke(0);
   line(0, 0, 1000000, 0);
-  fill(0);
-  ellipse(posball.x, posball.y, 10, 10);
+  fill(255,255,255);
+  ellipse(posball.x, posball.y, 20, 20);
   fill(255, 255, 255);
   rect(posbox.x, posbox.y, box.x, box.y);
 
@@ -60,17 +60,41 @@ void draw() {
     spd.x *= -1;
   }
   if (posball.y >= height) {
-    String s = "GAME OVER";
-    fill(255, 0, 0);
+    String s = "GaMe OvEr!!";
+    fill(255, 60, 255);
     textAlign(CENTER, CENTER);
     textSize(80);
     text(s, width/2, height/2);
     fill(255, 255, 255);
   }
+  int bricks_alive = 0;
+  for(Brick b : br) {
+    if(b.life > 0) {
+      bricks_alive++;
+       
+    }
+  }
+  if(bricks_alive <= 0) {
+  String s = "YoU WiN!!";
+    fill(0, 255, 0);
+    textAlign(CENTER, CENTER);
+    textSize(80);
+    text(s, width/2, height/2);
+    fill(255, 255, 255);   
+  }
+  
+  if(bricks_alive >= 100) {
+  String s = "WeLcOmE!!";
+    fill(300, 200, 0);
+    textAlign(CENTER, CENTER);
+    textSize(80);
+    text(s, width/2, height/2);
+    fill(255, 255, 255);   
+  }
 
-  fill(0, 0, 0);
+  fill(255, 255, 255);
   textAlign(CENTER, CENTER);
-  textSize(20);
+  textSize(30);
   text(score, 10, 10);
   fill(255, 255, 255);
 
@@ -108,7 +132,7 @@ void mousePressed() {
   {
     spd.x = (mouseX - posball.x)/dif;
     spd.y = (mouseY- posball.y)/dif;
-    //can_click = false;
+    can_click = false;
   }
 }
 
