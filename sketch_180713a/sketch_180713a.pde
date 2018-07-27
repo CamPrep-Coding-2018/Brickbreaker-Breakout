@@ -1,33 +1,43 @@
-PVector posball; //<>//
+int bricks_alive = 0; //<>//
+PVector posball;
 PVector spd;
 boolean can_click = true;
 PVector box;
 PVector posbox;
-float dif = 110;
-int brick_number = 100;
+float dif = 70;
+int brick_number = 1;
 int score = 0;
 Brick [] br;
 
 void setup() {
   size(1080, 700);
-  posbox = new PVector(height/2, 650);
+  posbox = new PVector(width/2-100, 650);
   spd = new PVector(0, 0);
-  posball = new PVector(height/2, 645);
-  box = new PVector(200, 25);
+  posball = new PVector(width/2, 640);
+  box = new PVector(201, 25);
   br = new Brick [brick_number];
+  bricks_alive = brick_number;
   for (int i=0; i<brick_number; i++) {
     br[i]= new Brick();
   }
 }
 
 void draw() {
+  if (r_key && d_key) {
+    can_click=true;
+    brick_number =1;
+    setup();
+  }
+
   if (r_key) {
+    can_click=true;
+    brick_number +=1;
     setup();
   }
   background(0, 0, 0);
   stroke(0);
   line(0, 0, 1000000, 0);
-  fill(255,255,255);
+  fill(255, 255, 255);
   ellipse(posball.x, posball.y, 20, 20);
   fill(255, 255, 255);
   rect(posbox.x, posbox.y, box.x, box.y);
@@ -38,8 +48,8 @@ void draw() {
   }    
 
   // paddle cant leave screen
-  if ((posbox.x +100) > width) {
-    posbox.x = width-100;
+  if ((posbox.x +200) > width) {
+    posbox.x = width-200;
   }
   if (posbox.x < 0) {
     posbox.x = 0;
@@ -60,43 +70,45 @@ void draw() {
     spd.x *= -1;
   }
   if (posball.y >= height) {
-    String s = "GaMe OvEr!!";
+    String s = "Game Over!!";
     fill(255, 60, 255);
     textAlign(CENTER, CENTER);
     textSize(80);
     text(s, width/2, height/2);
     fill(255, 255, 255);
   }
-  int bricks_alive = 0;
-  for(Brick b : br) {
-    if(b.life > 0) {
-      bricks_alive++;
-       
-    }
-  }
-  if(bricks_alive <= 0) {
-  String s = "YoU WiN!!";
+
+  if (bricks_alive == 0) {
+    String s = "You Win!! Press R to Reset";
     fill(0, 255, 0);
     textAlign(CENTER, CENTER);
     textSize(80);
     text(s, width/2, height/2);
-    fill(255, 255, 255);   
+    fill(255, 255, 255);
+    spd.x = 0;
+    spd.y = 0;
   }
-  
-  if(bricks_alive >= 100) {
-  String s = "WeLcOmE!!";
+
+  if (score == 0) {
+    String s = "Welcome!!";
     fill(300, 200, 0);
     textAlign(CENTER, CENTER);
     textSize(80);
     text(s, width/2, height/2);
-    fill(255, 255, 255);   
+    fill(255, 255, 255);
   }
-
   fill(255, 255, 255);
   textAlign(CENTER, CENTER);
   textSize(30);
-  text(score, 10, 10);
+  text(score, 30, 10);
   fill(255, 255, 255);
+
+  if (d_key && can_click) {
+    posball.x += 10;
+  }
+  if (a_key && can_click) {
+    posball.x -= 10;
+  }
 
   if (d_key) {
     posbox.x +=10;
@@ -105,23 +117,22 @@ void draw() {
   }
 
 
-  if (circ_box_collide(posball, 5, posbox, box)) {
+  if (circ_box_collide(posball, 10, posbox, box)) {
     float q= posball.x-posbox.x;
     boolean w = true;
-    if (q > 100 && q< 200 && w) {
-      spd.y *=-1;
+    if (q > 67 && q< 134 && w) {
+      spd.y *=-1.01;
       w=false;
     }
-    if (q > 0 && q< 100 && w) {
-      spd.y *=-1;
+    if (q > 0 && q< 67 && w) {
+      spd.y *=-1.01;
       spd.x -= 5;
       w=false;
     }
-    if (q > 200 && q< 300 && w) {
-      spd.y *=-1;
-      spd.x +=5 ;
+    if (q > 134 && q< 201 && w) {
+      spd.y *=-1.01;
+      spd.x += 5;
       w=false;
-      spd.y *=-1;
     }
     w=true;
   }

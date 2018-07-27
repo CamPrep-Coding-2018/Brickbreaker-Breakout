@@ -12,9 +12,9 @@ class Brick {
   }
 
   void draw() {    
-    fill(500, 0, 0, 50 * life);
+    fill(500, 255, 255, 70 * life);
     rect(pos.x, pos.y, dim.x, dim.y);
-    if (circ_box_reflect(posball, 5, pos, dim, spd)) {
+    if (circ_box_reflect(posball, 10, pos, dim, spd)) {
       life--;
       score++;
       if (life==0) {
@@ -30,5 +30,6 @@ class Brick {
 
   void kill() {
     pos.set(-10000, 10000);
+    bricks_alive -=1;
   }
 }
