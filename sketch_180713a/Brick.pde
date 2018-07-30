@@ -2,14 +2,28 @@ class Brick {
   PVector pos;
   PVector dim;
   boolean safe = false;
-
+  PVector posvar[];
   int life;
-
+  int _x;
+  int _y;
+  
   Brick() {
-    pos = new PVector(random(width), random(height/1.2));
+    _x = int(random(0,31));
+    _y = int(random(0,24));
+    posvar = new PVector[300];
+    for(int i = 0; i <200; i++){
+     posvar[i] = new PVector(0,0);
+      posvar[i].x = 35*i;
+    }
+    for(int i = 0; i <100; i++){
+     posvar[i].y = 25*i;
+    }
+    pos = new PVector(posvar[_x].x, posvar[_y].y);
     dim = new PVector(35, 25);
     life = int(random(1, 5));
-  }
+    
+    
+}
 
   void draw() {    
     fill(500, 255, 255, 70 * life);
