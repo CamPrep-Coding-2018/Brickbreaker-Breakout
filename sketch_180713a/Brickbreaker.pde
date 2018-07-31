@@ -4,13 +4,17 @@ PVector spd;
 boolean can_click = true;
 PVector box;
 PVector posbox;
-float dif = 80;
-int brick_number = 100;
+float dif = 50;
+int brick_number = 50;
 int score = 0;
 Brick [] br;
+boolean lost;
+
+
 
 void setup() {
   size(1085, 700);
+  lost = false;
   posbox = new PVector(width/2-100, 650);
   spd = new PVector(0, 0);
   posball = new PVector(width/2, 640);
@@ -69,7 +73,9 @@ void draw() {
   if (posball.x <= 0) {
     spd.x *= -1;
   }
+
   if (posball.y >= height) {
+    lost = true;
     String s = "Game Over!!";
     fill(255, 60, 255);
     textAlign(CENTER, CENTER);
@@ -127,12 +133,12 @@ void draw() {
     }
     if (q > 0 && q< 67 && w) {
       spd.y *=-1.01;
-      spd.x -= 5;
+      spd.x -= 2;
       w=false;
     }
     if (q > 134 && q< 201 && w) {
       spd.y *=-1.01;
-      spd.x += 5;
+      spd.x += 2;
       w=false;
     }
     w=true;
